@@ -1,4 +1,4 @@
-import app from './app'
+import app from './app.js'
 import https from 'https'
 import fs from 'fs'
 
