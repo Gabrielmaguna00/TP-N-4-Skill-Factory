@@ -8,12 +8,13 @@ datasource db {
 }
 
 model city {
-  id       Int     @id
+  id       Int     @id @default(autoincrement())
   name     String? @db.VarChar(45)
   code     String? @db.VarChar(45)
   state_id Int
+  user     user[]
 
-  @@index([state_id], map: "state_idx")
+  // @@index([state_id], map: "state_idx")
 }
 
 model comment {
@@ -27,30 +28,26 @@ model comment {
   @@index([written_by], map: "written_by_idx")
 }
 
-model country {
-  id   Int     @id
-  name String? @db.VarChar(45)
-  code String? @db.VarChar(45)
-}
-
 model field {
-  id   Int     @id
+  id   Int     @id @default(autoincrement())
   name String? @db.VarChar(45)
   type String? @db.VarChar(45)
 }
 
 model hobby {
-  id      Int     @id
-  name    String? @db.VarChar(45)
-  user_id String  @db.VarChar(45)
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(45)
+  users user[]
+  // user_id String  @db.VarChar(45)
 
-  @@index([user_id], map: "user_id_idx")
+  // @@index([user_id], map: "user_id_idx")
 }
 
 model language {
   id    Int     @id @default(autoincrement())
   name  String? @db.VarChar(45)
   level String? @db.VarChar(45)
+  user  user[]
 }
 
 model organization {
@@ -62,9 +59,10 @@ model organization {
   createdAt      String? @db.VarChar(45)
   field_id       Int
   founder_id     String  @db.VarChar(45)
+  user           user[]
 
-  @@index([field_id], map: "fk_organization_field1_idx")
-  @@index([founder_id], map: "founder_idx")
+  // @@index([field_id], map: "fk_organization_field1_idx")
+  // @@index([founder_id], map: "founder_idx")
 }
 
 model post {
@@ -75,56 +73,67 @@ model post {
   updatedAt  String?   @db.VarChar(45)
   author_id  String    @db.VarChar(45)
 
-  @@index([author_id], map: "author_idx")
+  // @@index([author_id], map: "author_idx")
 }
 
 model skill {
   id       Int     @id @default(autoincrement())
   name     String? @db.VarChar(45)
   level    String? @db.VarChar(45)
-  type     String? @db.VarChar(45)
   field_id Int
 
-  @@index([field_id], map: "fk_skill_field1_idx")
+  // @@index([field_id], map: "fk_skill_field1_idx")
 }
 
 model state {
-  id         Int     @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String? @db.VarChar(45)
   code       String? @db.VarChar(45)
-  user_id    String  @db.VarChar(50)
   country_id Int
+  users      user[]
 
-  @@id([id, user_id])
-  @@index([country_id], map: "state_ibfk_1_idx")
+  // @@index([country_id], map: "state_ibfk_1_idx")
+}
+
+model country {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(45)
+  code String? @db.VarChar(45)
+  user user[]
 }
 
 model user {
-  id              String    @id @db.VarChar(50)
-  name            String    @db.VarChar(16)
-  surname         String?   @db.VarChar(45)
-  email           String?   @db.VarChar(255)
-  password        String    @db.VarChar(32)
-  createdAt       DateTime? @default(now()) @db.Timestamp(0)
-  avatar          String?   @db.VarChar(1024)
-  birthdate       String?   @db.VarChar(45)
-  pronouns        String?   @db.VarChar(10)
-  nationality     String?   @db.VarChar(45)
-  residence       String?   @db.VarChar(45)
-  phone           String?   @db.VarChar(45)
-  description     String?   @db.VarChar(1024)
-  actualJob       String?   @db.VarChar(45)
-  active          Int?      @db.TinyInt
-  status          String?   @db.VarChar(45)
+  id              String       @id @db.VarChar(50)
+  name            String       @db.VarChar(16)
+  surname         String?      @db.VarChar(45)
+  email           String?      @db.VarChar(255)
+  password        String       @db.VarChar(32)
+  createdAt       DateTime?    @default(now()) @db.Timestamp(0)
+  avatar          String?      @db.VarChar(1024)
+  birthdate       String?      @db.VarChar(45)
+  pronouns        String?      @db.VarChar(10)
+  nationality     String?      @db.VarChar(45)
+  residence       String?      @db.VarChar(45)
+  phone           String?      @db.VarChar(45)
+  description     String?      @db.VarChar(1024)
+  actualJob       String?      @db.VarChar(45)
+  active          Int?         @db.TinyInt
+  status          String?      @db.VarChar(45)
   language_id     Int
   organization_id Int
   country_id      Int
   state_id        Int
   city_id         Int
+  hobby_id        Int?
+  state           state        @relation(fields: [state_id], references: [id])
+  hobby           hobby?       @relation(fields: [hobby_id], references: [id])
+  country         country      @relation(fields: [country_id], references: [id])
+  city            city         @relation(fields: [city_id], references: [id])
+  language        language     @relation(fields: [language_id], references: [id])
+  organization    organization @relation(fields: [organization_id], references: [id])
 
-  @@index([city_id], map: "cty_id_idx")
-  @@index([country_id], map: "fk_user_country1_idx")
-  @@index([language_id], map: "fk_user_language1_idx")
-  @@index([organization_id], map: "fk_user_organization1_idx")
-  @@index([state_id], map: "state_id_idx")
+  // @@index([city_id], map: "cty_id_idx")
+  // @@index([country_id], map: "fk_user_country1_idx")
+  // @@index([language_id], map: "fk_user_language1_idx")
+  // @@index([organization_id], map: "fk_user_organization1_idx")
 }
