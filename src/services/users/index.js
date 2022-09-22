@@ -1,4 +1,6 @@
-import User from '../../models/User'
+import {PrismaClient} from "@prisma/client"
+
+const prisma = new PrismaClient();
 
 export const getAllUsers = () => {
     const users = User.getAllUsers()
@@ -20,7 +22,7 @@ export const updateUser = (id, newUser) => {
     return user
 }
 
-export const deactiveUser = (id) => {
+export const desactiveUser = (id) => {
     const user = User.deactiveUser(id)
     return user
 }
