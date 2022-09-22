@@ -107,7 +107,7 @@ model user {
   name            String        @db.VarChar(16)
   surname         String?       @db.VarChar(45)
   email           String        @unique @db.VarChar(255)
-  password        String?        @db.VarChar(100)
+  password        String?       @db.VarChar(100)
   createdAt       DateTime?     @default(now()) @db.Timestamp(0)
   avatar          String?       @db.VarChar(1024)
   birthdate       String?       @db.VarChar(45)

@@ -1,11 +1,12 @@
-import { Router } from 'express'
+import { Router } from "express";
+import { isLoggedIn } from "../../utils/isLoged.js";
 
-const router = Router()
+const router = Router();
 
-router
-    .get("/", (req, res) => {
-        res.send("Bienvenido a TinderJob")
-    })
-    .get("/profile")
-    .get("/timeline")
-    .get("/settings")
+export default router
+  .get("/", isLoggedIn, (req, res) => {
+    res.send("Bienvenido a TinderJob");
+  })
+  .get("/profile", isLoggedIn)
+  .get("/timeline", isLoggedIn)
+  .get("/settings", isLoggedIn);
