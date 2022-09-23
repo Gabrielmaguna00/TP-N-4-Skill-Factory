@@ -2,11 +2,8 @@ import passport from "passport";
 import dotenv from "dotenv";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-
-// import { generateHash, validatePassword } from "../utils/passwordHash.js";
 import {
   createUser,
-  findUserGoogleID,
   findUserMail,
   getOneUserDeserialize,
 } from "../models/User.js";

@@ -22,7 +22,7 @@ export const updateUser = async (req, res) => {
 };
 
 export const desactiveUser = async (req, res) => {
-  const user = await service.deactiveUser(req.params.id);
+  const user = await service.desactiveUser(req.params.id);
   res.status(200).json(user);
 };
 
