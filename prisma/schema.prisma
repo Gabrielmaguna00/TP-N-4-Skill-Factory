@@ -66,9 +66,10 @@ model organization {
 }
 
 model post {
-  id         Int       @id @default(autoincrement())
+  id         Int       @id @unique @default(autoincrement())
   body       String?   @db.VarChar(1024)
   multimedia String?   @db.VarChar(500)
+  visible    Boolean   @default(false)
   createdAt  DateTime? @db.Timestamp(0)
   updatedAt  String?   @db.VarChar(45)
   author_id  String    @db.VarChar(45)

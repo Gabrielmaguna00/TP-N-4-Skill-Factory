@@ -1,47 +1,47 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function getAllUsers() {
+export const getAllUsers = async () => {
   const users = await prisma.user.findMany();
   return users;
-}
+};
 
-export async function getOneUser(name) {
+export const getOneUser = async (name) => {
   const user = await prisma.user.findOne({
     where: {
       name: name,
     },
   });
-}
+};
 
-export async function getOneUserDeserialize(id) {
+export const getOneUserDeserialize = async (id) => {
   const user = await prisma.user.findFirst({
     where: {
       id,
     },
   });
   return user;
-}
+};
 
-export async function createUser(data) {
+export const createUser = async (data) => {
   const createdUser = await prisma.user.create({
     data,
   });
   return createdUser;
-}
+};
 
-export async function updateUser(id, data) {
-  const updatedUser = await prisma.user.updateOne({
+export const updateUser = async (id, data) => {
+  const updatedUser = await prisma.user.update({
     where: {
       id: id,
     },
     data: data,
   });
   return updatedUser;
-}
+};
 
-export async function activeUser(id) {
-  const activeUser = await prisma.user.updateOne({
+export const activeUser = async (id) => {
+  const activeUser = await prisma.user.update({
     where: {
       id: id,
     },
@@ -50,10 +50,10 @@ export async function activeUser(id) {
     },
   });
   return activeUser;
-}
+};
 
-export async function desactiveUser(id) {
-  const deactiveUser = await prisma.user.updateOne({
+export const desactiveUser = async (id) => {
+  const desactiveUser = await prisma.user.update({
     where: {
       id: id,
     },
@@ -61,10 +61,10 @@ export async function desactiveUser(id) {
       active: false,
     },
   });
-  return deactiveUser;
-}
+  return desactiveUser;
+};
 
-export async function findUserMail(email) {
+export const findUserMail = async (email) => {
   const user = await prisma.user.findFirst({
     where: {
       email,
@@ -72,9 +72,9 @@ export async function findUserMail(email) {
     },
   });
   return user;
-}
+};
 
-export async function findUserGoogleID(email, google_id) {
+export const findUserGoogleID = async (email, google_id) => {
   const user = await prisma.user.findFirst({
     where: {
       email,
@@ -82,9 +82,9 @@ export async function findUserGoogleID(email, google_id) {
     },
   });
   return user;
-}
+};
 
-export async function deletemany() {
+export const deletemany = async () => {
   const user = await prisma.user.deleteMany();
   return user;
-}
+};
