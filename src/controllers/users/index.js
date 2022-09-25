@@ -7,8 +7,13 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getOneUser = async (req, res) => {
-  const user = await service.getOneUser(req.params.name);
+  const user = await service.getOneUser(req.params.id);
   res.status(200).json(user);
+};
+
+export const getNameUser = async (req, res) => {
+  const users = await service.getNameUser(req.params.name);
+  res.status(200).json(users);
 };
 
 export const createUser = async (req, res) => {

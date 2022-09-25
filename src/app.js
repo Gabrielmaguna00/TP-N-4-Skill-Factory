@@ -9,6 +9,7 @@ import login from "./api/routes/login.js";
 import register from "./api/routes/register.js";
 import logout from "./api/routes/logOut.js";
 import post from "./api/routes/posts.js";
+import user from "./api/routes/users.js";
 import v1 from "./v1/routes/index.routes.js";
 import "./auth/strategy.js";
 import "./auth/oauth-strategy.js";
@@ -46,6 +47,7 @@ app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/api/logout", logout);
 app.use("/api/post", post);
+app.use("/api/user", user);
 app.use("/v1", v1);
 
 app.listen(process.env.PORT, () => {

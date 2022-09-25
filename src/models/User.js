@@ -6,12 +6,23 @@ export const getAllUsers = async () => {
   return users;
 };
 
-export const getOneUser = async (name) => {
+export const getOneUser = async (id) => {
   const user = await prisma.user.findOne({
     where: {
-      name: name,
+      id,
     },
   });
+};
+
+export const getNameUser = async (name) => {
+  const users = await prisma.user.findMany({
+    where: {
+      name: {
+        contains: name,
+      },
+    },
+  });
+  return users;
 };
 
 export const getOneUserDeserialize = async (id) => {

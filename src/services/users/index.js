@@ -4,9 +4,14 @@ export const getAllUsers = () => {
   return users;
 };
 
-export const getOneUser = (name) => {
-  const user = User.getOneUser(name);
+export const getOneUser = (id) => {
+  const user = User.getOneUser(id);
   return user;
+};
+
+export const getNameUser = (name) => {
+  const users = User.getNameUser(name);
+  return users;
 };
 
 export const createUser = (newUser) => {
@@ -20,7 +25,7 @@ export const updateUser = (id, newUser) => {
 };
 
 export const desactiveUser = (id) => {
-  const user = User.deactiveUser(id);
+  const user = User.desactiveUser(id);
   return user;
 };
 

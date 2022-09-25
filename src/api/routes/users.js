@@ -1,11 +1,12 @@
 import { Router } from "express";
-import controller from "../../controllers/users/index.js";
+import * as controller from "../../controllers/users/index.js";
 const router = Router();
 
-router
+export default router
   .get("/", controller.getAllUsers)
-  .get("/:name", controller.getOneUser)
+  .get("/:id", controller.getOneUser)
+  .get("/search/:name", controller.getNameUser)
   .post("/", controller.createUser)
-  .put("/:id", controller.updateUser)
-  .put("/:id/active", controller.activeUser)
-  .put("/:id/deactive", controller.deactiveUser);
+  .put("/", controller.updateUser)
+  .put("/active/:id", controller.activeUser)
+  .put("/desactive/:id", controller.desactiveUser);
