@@ -11,11 +11,12 @@ export default router
     "/",
     fieldsCompleted,
     passport.authenticate("local-register", {
-      failureRedirect: "register/fail",
+      // failureRedirect: "register/fail",
       passReqToCallBack: true,
     }),
     (req, res) => {
-      res.redirect("http://localhost:3000/v1");
+      res.send("Let`s GOOOOOOOOOOOO")
+      // res.redirect("http://localhost:3000/v1");
     }
   )
   .delete("/delete", deletemanys);

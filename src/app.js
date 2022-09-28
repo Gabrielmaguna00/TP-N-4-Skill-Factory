@@ -13,23 +13,37 @@ import user from "./api/routes/users.js";
 import v1 from "./v1/routes/index.routes.js";
 import "./auth/strategy.js";
 import "./auth/oauth-strategy.js";
+import path from 'path';
+import {fileURLToPath} from 'url';
 
+const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.join(path.dirname(__filename));
+console.log('directory-name 👉️', __dirname);
+
+//Motor de plantillas
+app.set("views", __dirname + "/views");
+app.set('view engine', 'ejs')
+
+app.use(express.static(__dirname + "/public"))
+
+//Conexion a redis
 const client = createClient({
   host: "127.0.0.1",
   port: 6379,
 });
-
 (async function () {
   client.on("error", (err) => console.log("Redis Client Error", err));
   await client.connect();
   console.log("Conectado a redis");
 })();
-const app = express();
 
 // Inicializaciones
 dotenv.config();
 app.use(morgan("dev"));
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -43,6 +57,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.use("/", (req, res)=>{
+  let prueba="HOLA"
+  res.render("prueba", {prueba})
+})
 app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/api/logout", logout);

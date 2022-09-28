@@ -1,17 +1,15 @@
 import { Router } from "express";
 import passport from "passport";
 import { successfullogin } from "../../controllers/login/index.js";
+import { isLoggedIn } from "../../utils/isLoged.js";
 
 const router = Router();
 
 export default router
   .get("/", (req, res) => {
     res.send(
-      '<p>LOGIN RENDER</p><a href="http://localhost:3000/api/login/google">Inicio con Google</a>'
+      '<p>LOGIN RENDER</p><a href="http://localhost:3001/api/login/google">Inicio con Google</a>'
     );
-  })
-  .get("/", (req, res) => {
-    res.send("Error al crear el usuario o login");
   })
   .post(
     "/",
@@ -21,18 +19,19 @@ export default router
       passReqToCallback: true,
     }),
     (req, res) => {
-      res.redirect("http://localhost:3000/v1");
+      res.json({msg:true});
     }
   )
   .get("/google", passport.authenticate("google"))
   .get(
     "/redirect/google",
     passport.authenticate("google", {
-      failureRedirect: "fail",
+      failureRedirect: "http://localhost:3000",
       failureMessage: true,
     }),
+    isLoggedIn,
     (req, res) => {
-      res.redirect("http://localhost:3000/v1");
+      res.redirect("http://localhost:3000/home");
     }
   )
   .get("/timeline")

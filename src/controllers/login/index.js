@@ -4,5 +4,6 @@ export const successfullogin = async (req, res, next) => {
       message: "Please provide all required fields",
     });
   }
+  console.log("succes",req.body);
   next();
 };
